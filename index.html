@@ -8,432 +8,86 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #1a1814;
-    --ink-2: #3d3a34;
-    --ink-3: #7a7568;
-    --ink-4: #b0aa9f;
-    --paper: #f7f4ee;
-    --paper-2: #ede9e0;
-    --paper-3: #e2ddd4;
-    --green: #2d5a1b;
-    --green-2: #4a8c2a;
-    --green-light: #e8f0e2;
-    --accent: #c4561a;
-    --rule: #c8c2b5;
-    --ff-display: 'Playfair Display', Georgia, serif;
-    --ff-body: 'Source Serif 4', Georgia, serif;
-    --ff-mono: 'JetBrains Mono', monospace;
+    --ink:#1a1814;--ink-2:#3d3a34;--ink-3:#7a7568;--ink-4:#b0aa9f;
+    --paper:#f7f4ee;--paper-2:#ede9e0;
+    --green:#2d5a1b;--green-2:#4a8c2a;--green-light:#e8f0e2;
+    --accent:#c4561a;--rule:#c8c2b5;
+    --ff-display:'Playfair Display',Georgia,serif;
+    --ff-body:'Source Serif 4',Georgia,serif;
+    --ff-mono:'JetBrains Mono',monospace;
   }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--ff-body);font-size:16px;line-height:1.7;min-height:100vh}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .masthead{border-bottom:3px double var(--rule);padding:0 2rem;background:var(--paper);position:sticky;top:0;z-index:100}
+  .masthead-top{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0 .6rem;border-bottom:1px solid var(--rule);gap:1rem}
+  .logo{font-family:var(--ff-display);font-size:1.75rem;font-weight:700;letter-spacing:-.02em;color:var(--green);line-height:1;white-space:nowrap}
+  .logo span{color:var(--accent);font-style:italic;font-weight:400}
+  .mdate{font-family:var(--ff-mono);font-size:.68rem;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;text-align:right}
+  .mnav{display:flex;padding:.4rem 0}
+  .nbtn{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);background:none;border:none;padding:.35rem 1rem .35rem 0;cursor:pointer;transition:color .15s;position:relative}
+  .nbtn::after{content:'';position:absolute;bottom:0;left:0;right:1rem;height:2px;background:var(--green);transform:scaleX(0);transition:transform .2s}
+  .nbtn.active{color:var(--green);font-weight:500}.nbtn.active::after{transform:scaleX(1)}
+  .nbtn:hover{color:var(--ink)}
+  .rbtn{font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.06em;color:var(--green);background:var(--green-light);border:1px solid var(--green);border-radius:3px;padding:.3rem .75rem;cursor:pointer;transition:all .15s;white-space:nowrap}
+  .rbtn:hover{background:var(--green);color:white}.rbtn:disabled{opacity:.5;cursor:not-allowed}
 
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--ff-body);
-    font-size: 16px;
-    line-height: 1.7;
-    min-height: 100vh;
-  }
+  .wrap{max-width:1100px;margin:0 auto;padding:2rem}
+  .panel{display:none}.panel.active{display:block}
 
-  /* ── Masthead ── */
-  .masthead {
-    border-bottom: 3px double var(--rule);
-    padding: 0 2rem;
-    background: var(--paper);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .masthead-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.9rem 0 0.6rem;
-    border-bottom: 1px solid var(--rule);
-    gap: 1rem;
-  }
-  .masthead-logo {
-    font-family: var(--ff-display);
-    font-size: 1.75rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--green);
-    line-height: 1;
-    white-space: nowrap;
-  }
-  .masthead-logo span {
-    color: var(--accent);
-    font-style: italic;
-    font-weight: 400;
-  }
-  .masthead-date {
-    font-family: var(--ff-mono);
-    font-size: 0.68rem;
-    color: var(--ink-3);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-align: right;
-  }
-  .masthead-nav {
-    display: flex;
-    gap: 0;
-    padding: 0.4rem 0;
-  }
-  .nav-btn {
-    font-family: var(--ff-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    background: none;
-    border: none;
-    padding: 0.35rem 1rem 0.35rem 0;
-    cursor: pointer;
-    transition: color 0.15s;
-    position: relative;
-  }
-  .nav-btn::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 1rem;
-    height: 2px;
-    background: var(--green);
-    transform: scaleX(0);
-    transition: transform 0.2s;
-  }
-  .nav-btn.active { color: var(--green); font-weight: 500; }
-  .nav-btn.active::after { transform: scaleX(1); }
-  .nav-btn:hover { color: var(--ink); }
+  .srule{display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem}
+  .srule h2{font-family:var(--ff-display);font-size:1.05rem;font-weight:700;color:var(--ink);white-space:nowrap}
+  .srule::after{content:'';flex:1;height:1px;background:var(--rule)}
 
-  .refresh-btn {
-    font-family: var(--ff-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    color: var(--green);
-    background: var(--green-light);
-    border: 1px solid var(--green);
-    border-radius: 3px;
-    padding: 0.3rem 0.75rem;
-    cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
-  }
-  .refresh-btn:hover { background: var(--green); color: white; }
-  .refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .stats{display:flex;gap:2rem;padding:.75rem 0 1.5rem;border-bottom:1px solid var(--rule);margin-bottom:1.75rem;flex-wrap:wrap}
+  .sn{font-family:var(--ff-display);font-size:1.4rem;font-weight:700;color:var(--green);line-height:1}
+  .sl{font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-4)}
 
-  /* ── Layout ── */
-  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  .fbar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center}
+  .flabel{font-family:var(--ff-mono);font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-4);margin-right:.25rem}
+  .chip{font-family:var(--ff-mono);font-size:.65rem;letter-spacing:.05em;padding:.25rem .7rem;border:1px solid var(--rule);border-radius:2px;background:none;color:var(--ink-3);cursor:pointer;transition:all .15s}
+  .chip.on{background:var(--green);border-color:var(--green);color:white}
+  .chip:hover:not(.on){border-color:var(--green);color:var(--green)}
 
-  /* ── Panels ── */
-  .panel { display: none; }
-  .panel.active { display: block; }
+  .ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:0;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+  .ncard{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1.25rem 1.25rem 1rem;transition:background .15s;opacity:0;animation:fu .4s ease forwards;text-decoration:none;color:inherit;display:block}
+  .ncard:hover{background:var(--paper-2)}
+  .nsrc{font-family:var(--ff-mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+  .ntitle{font-family:var(--ff-display);font-size:1rem;font-weight:700;line-height:1.35;color:var(--ink);margin-bottom:.5rem}
+  .nsum{font-size:.82rem;color:var(--ink-2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .nmeta{margin-top:.75rem;font-family:var(--ff-mono);font-size:.62rem;color:var(--ink-4);letter-spacing:.04em}
 
-  /* ── Section header ── */
-  .section-rule {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.75rem;
-  }
-  .section-rule h2 {
-    font-family: var(--ff-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--ink);
-    white-space: nowrap;
-    letter-spacing: 0.01em;
-  }
-  .section-rule::before, .section-rule::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--rule);
-  }
-  .section-rule::before { display: none; }
+  .plist{display:flex;flex-direction:column}
+  .pitem{border-bottom:1px solid var(--rule);padding:1.5rem 0;display:grid;grid-template-columns:200px 1fr;gap:1.5rem;opacity:0;animation:fu .4s ease forwards}
+  .pitem:first-child{border-top:1px solid var(--rule)}
+  .pleft{display:flex;flex-direction:column;gap:.4rem;padding-top:.15rem}
+  .pjournal{font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--green);line-height:1.4}
+  .pdate{font-family:var(--ff-mono);font-size:.62rem;color:var(--ink-4)}
+  .ptag{display:inline-block;font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;background:var(--green-light);color:var(--green);border:1px solid #b8d4a8;border-radius:2px;padding:.15rem .4rem;width:fit-content}
+  .ptitle{font-family:var(--ff-display);font-size:1.05rem;font-weight:700;line-height:1.4;color:var(--ink);margin-bottom:.4rem}
+  .ptitle a{color:inherit;text-decoration:none}.ptitle a:hover{color:var(--green)}
+  .pauth{font-style:italic;font-size:.8rem;color:var(--ink-3);margin-bottom:.6rem}
+  .pabs{font-size:.83rem;color:var(--ink-2);line-height:1.65}
+  .pdoi{margin-top:.6rem;font-family:var(--ff-mono);font-size:.62rem;color:var(--ink-4)}
+  .pdoi a{color:var(--green-2);text-decoration:none}.pdoi a:hover{text-decoration:underline}
 
-  /* ── News grid ── */
-  .news-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 0;
-    border-top: 1px solid var(--rule);
-    border-left: 1px solid var(--rule);
-  }
-  .news-card {
-    border-right: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    padding: 1.25rem 1.25rem 1rem;
-    transition: background 0.15s;
-    cursor: pointer;
-    opacity: 0;
-    animation: fadeUp 0.4s ease forwards;
-  }
-  .news-card:hover { background: var(--paper-2); }
-  .news-source {
-    font-family: var(--ff-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.5rem;
-  }
-  .news-title {
-    font-family: var(--ff-display);
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.35;
-    color: var(--ink);
-    margin-bottom: 0.5rem;
-  }
-  .news-summary {
-    font-size: 0.82rem;
-    color: var(--ink-2);
-    line-height: 1.6;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .news-meta {
-    margin-top: 0.75rem;
-    font-family: var(--ff-mono);
-    font-size: 0.62rem;
-    color: var(--ink-4);
-    letter-spacing: 0.04em;
-  }
-  .news-card a {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-  }
+  .loading{padding:4rem 0;text-align:center}
+  .spin{width:28px;height:28px;border:2px solid var(--rule);border-top-color:var(--green);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 1rem}
+  .ltxt{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+  .lsub{font-size:.8rem;color:var(--ink-4);margin-top:.4rem;font-style:italic}
+  .err{padding:1.5rem;background:#fdf0e8;border:1px solid #e8c4a0;border-radius:4px;font-size:.85rem;color:var(--accent);margin:1rem 0;line-height:1.6}
+  .empty{padding:3rem;text-align:center;color:var(--ink-3);font-style:italic}
 
-  /* ── Papers ── */
-  .papers-list { display: flex; flex-direction: column; gap: 0; }
-  .paper-item {
-    border-bottom: 1px solid var(--rule);
-    padding: 1.5rem 0;
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.4s ease forwards;
-  }
-  .paper-item:first-child { border-top: 1px solid var(--rule); }
-  .paper-left {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    padding-top: 0.15rem;
-  }
-  .paper-journal {
-    font-family: var(--ff-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--green);
-    line-height: 1.4;
-  }
-  .paper-date {
-    font-family: var(--ff-mono);
-    font-size: 0.62rem;
-    color: var(--ink-4);
-    letter-spacing: 0.04em;
-  }
-  .paper-tag {
-    display: inline-block;
-    font-family: var(--ff-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    background: var(--green-light);
-    color: var(--green);
-    border: 1px solid #b8d4a8;
-    border-radius: 2px;
-    padding: 0.15rem 0.4rem;
-    width: fit-content;
-  }
-  .paper-right {}
-  .paper-title {
-    font-family: var(--ff-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    line-height: 1.4;
-    color: var(--ink);
-    margin-bottom: 0.4rem;
-  }
-  .paper-title a { color: inherit; text-decoration: none; }
-  .paper-title a:hover { color: var(--green); }
-  .paper-authors {
-    font-family: var(--ff-body);
-    font-style: italic;
-    font-size: 0.8rem;
-    color: var(--ink-3);
-    margin-bottom: 0.6rem;
-  }
-  .paper-abstract {
-    font-size: 0.83rem;
-    color: var(--ink-2);
-    line-height: 1.65;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .paper-doi {
-    margin-top: 0.6rem;
-    font-family: var(--ff-mono);
-    font-size: 0.62rem;
-    color: var(--ink-4);
-  }
-  .paper-doi a { color: var(--green-2); text-decoration: none; }
-  .paper-doi a:hover { text-decoration: underline; }
+  .ncard:nth-child(1){animation-delay:.05s}.ncard:nth-child(2){animation-delay:.1s}.ncard:nth-child(3){animation-delay:.15s}.ncard:nth-child(4){animation-delay:.2s}.ncard:nth-child(n+5){animation-delay:.25s}
+  .pitem:nth-child(1){animation-delay:.05s}.pitem:nth-child(2){animation-delay:.12s}.pitem:nth-child(3){animation-delay:.19s}.pitem:nth-child(n+4){animation-delay:.26s}
+  @keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes sp{to{transform:rotate(360deg)}}
 
-  /* ── Loading ── */
-  .loading-state {
-    padding: 4rem 0;
-    text-align: center;
-    color: var(--ink-3);
-  }
-  .loading-spinner {
-    width: 28px; height: 28px;
-    border: 2px solid var(--rule);
-    border-top-color: var(--green);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 1rem;
-  }
-  .loading-text {
-    font-family: var(--ff-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
-  .loading-sub {
-    font-size: 0.8rem;
-    color: var(--ink-4);
-    margin-top: 0.4rem;
-    font-style: italic;
-  }
-
-  /* ── Error ── */
-  .error-state {
-    padding: 3rem;
-    text-align: center;
-    background: #fdf0e8;
-    border: 1px solid #e8c4a0;
-    border-radius: 4px;
-    margin: 2rem 0;
-  }
-  .error-state p { color: var(--accent); font-size: 0.9rem; margin-bottom: 0.5rem; }
-  .error-state small { color: var(--ink-3); font-size: 0.8rem; font-family: var(--ff-mono); }
-
-  /* ── Empty state ── */
-  .empty-state {
-    padding: 3rem;
-    text-align: center;
-    color: var(--ink-3);
-    font-style: italic;
-    font-size: 0.9rem;
-  }
-
-  /* ── Stats bar ── */
-  .stats-bar {
-    display: flex;
-    gap: 2rem;
-    padding: 0.75rem 0 1.5rem;
-    border-bottom: 1px solid var(--rule);
-    margin-bottom: 1.75rem;
-  }
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-  }
-  .stat-num {
-    font-family: var(--ff-display);
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--green);
-    line-height: 1;
-  }
-  .stat-label {
-    font-family: var(--ff-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--ink-4);
-  }
-
-  /* ── Filter bar ── */
-  .filter-bar {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-    align-items: center;
-  }
-  .filter-label {
-    font-family: var(--ff-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--ink-4);
-    margin-right: 0.25rem;
-  }
-  .filter-chip {
-    font-family: var(--ff-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.05em;
-    padding: 0.25rem 0.7rem;
-    border: 1px solid var(--rule);
-    border-radius: 2px;
-    background: none;
-    color: var(--ink-3);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .filter-chip.active {
-    background: var(--green);
-    border-color: var(--green);
-    color: white;
-  }
-  .filter-chip:hover:not(.active) {
-    border-color: var(--green);
-    color: var(--green);
-  }
-
-  /* ── Animations ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ── Stagger delays ── */
-  .news-card:nth-child(1) { animation-delay: 0.05s; }
-  .news-card:nth-child(2) { animation-delay: 0.1s; }
-  .news-card:nth-child(3) { animation-delay: 0.15s; }
-  .news-card:nth-child(4) { animation-delay: 0.2s; }
-  .news-card:nth-child(5) { animation-delay: 0.25s; }
-  .news-card:nth-child(6) { animation-delay: 0.3s; }
-  .news-card:nth-child(n+7) { animation-delay: 0.35s; }
-
-  .paper-item:nth-child(1) { animation-delay: 0.05s; }
-  .paper-item:nth-child(2) { animation-delay: 0.12s; }
-  .paper-item:nth-child(3) { animation-delay: 0.19s; }
-  .paper-item:nth-child(4) { animation-delay: 0.26s; }
-  .paper-item:nth-child(n+5) { animation-delay: 0.33s; }
-
-  /* ── Responsive ── */
-  @media (max-width: 700px) {
-    .container { padding: 1rem; }
-    .masthead { padding: 0 1rem; }
-    .paper-item { grid-template-columns: 1fr; gap: 0.5rem; }
-    .paper-left { flex-direction: row; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
-    .news-grid { grid-template-columns: 1fr; }
-    .stats-bar { gap: 1.25rem; }
+  @media(max-width:700px){
+    .wrap{padding:1rem}.masthead{padding:0 1rem}
+    .pitem{grid-template-columns:1fr;gap:.5rem}
+    .pleft{flex-direction:row;flex-wrap:wrap;gap:.5rem;align-items:center}
+    .ngrid{grid-template-columns:1fr}
   }
 </style>
 </head>
@@ -441,302 +95,202 @@
 
 <header class="masthead">
   <div class="masthead-top">
-    <div class="masthead-logo">Green<span>Digest</span></div>
-    <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
-      <button class="refresh-btn" id="refreshBtn" onclick="refreshAll()">↻ 刷新</button>
-      <div class="masthead-date" id="dateDisplay"></div>
+    <div class="logo">Green<span>Digest</span></div>
+    <div style="display:flex;align-items:center;gap:.75rem;flex-shrink:0">
+      <button class="rbtn" id="rbtn" onclick="refreshAll()">↻ 刷新</button>
+      <div class="mdate" id="mdate"></div>
     </div>
   </div>
-  <nav class="masthead-nav">
-    <button class="nav-btn active" onclick="switchPanel('news', this)">新闻简报</button>
-    <button class="nav-btn" onclick="switchPanel('papers', this)">学术文献</button>
-    <button class="nav-btn" onclick="switchPanel('about', this)">关于</button>
+  <nav class="mnav">
+    <button class="nbtn active" onclick="switchPanel('news',this)">新闻简报</button>
+    <button class="nbtn" onclick="switchPanel('papers',this)">学术文献</button>
+    <button class="nbtn" onclick="switchPanel('about',this)">关于</button>
   </nav>
 </header>
 
-<main class="container">
-
-  <!-- ── News Panel ── -->
+<main class="wrap">
   <div class="panel active" id="panel-news">
-    <div id="news-stats" class="stats-bar" style="display:none"></div>
-    <div class="filter-bar" id="news-filters" style="display:none"></div>
-    <div class="section-rule"><h2>今日资讯</h2></div>
-    <div id="news-content"></div>
+    <div id="ns" class="stats" style="display:none"></div>
+    <div id="nf" class="fbar" style="display:none"></div>
+    <div class="srule"><h2>今日资讯</h2></div>
+    <div id="nc"></div>
   </div>
 
-  <!-- ── Papers Panel ── -->
   <div class="panel" id="panel-papers">
-    <div id="papers-stats" class="stats-bar" style="display:none"></div>
-    <div class="filter-bar" id="papers-filters" style="display:none"></div>
-    <div class="section-rule"><h2>最新文献</h2></div>
-    <div id="papers-content"></div>
+    <div id="ps" class="stats" style="display:none"></div>
+    <div id="pf" class="fbar" style="display:none"></div>
+    <div class="srule"><h2>最新文献</h2></div>
+    <div id="pc"></div>
   </div>
 
-  <!-- ── About Panel ── -->
   <div class="panel" id="panel-about">
-    <div class="section-rule"><h2>关于本站</h2></div>
-    <div style="max-width:600px;display:flex;flex-direction:column;gap:1.25rem;font-size:0.9rem;color:var(--ink-2);">
-      <p>Green Digest 自动聚合绿色政策、能源、碳减排领域的最新新闻与经济学顶刊文献，每次打开页面即可获取最新内容。</p>
+    <div class="srule"><h2>关于本站</h2></div>
+    <div style="max-width:600px;display:flex;flex-direction:column;gap:1.25rem;font-size:.9rem;color:var(--ink-2)">
+      <p>Green Digest 完全免费，无需 API Key。新闻通过公开 RSS 抓取，学术文献通过 CrossRef 免费数据库查询。</p>
       <div>
-        <p style="font-family:var(--ff-display);font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:0.5rem">新闻来源</p>
-        <p>New York Times · Wall Street Journal · The Economist · CNBC · Reuters</p>
+        <p style="font-family:var(--ff-display);font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">新闻来源</p>
+        <p>Reuters Environment · The Economist · CNBC · NYT Climate · The Guardian · Carbon Brief</p>
       </div>
       <div>
-        <p style="font-family:var(--ff-display);font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:0.5rem">收录期刊</p>
-        <p>American Economic Review · Quarterly Journal of Economics · Journal of Political Economy · Review of Economic Studies · Econometrica · Journal of Finance · Journal of Environmental Economics and Management · Management Science · 经济学季刊 (CJE)</p>
+        <p style="font-family:var(--ff-display);font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">收录期刊</p>
+        <p>AER · QJE · JPE · REStud · Econometrica · Journal of Finance · JEEM · Management Science · 经济学季刊</p>
       </div>
-      <div>
-        <p style="font-family:var(--ff-display);font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:0.5rem">关键词</p>
-        <p style="font-family:var(--ff-mono);font-size:0.75rem;color:var(--ink-3);">climate policy · carbon tax · renewable energy · green technology · emission trading · decarbonization · environmental regulation · carbon pricing · energy transition · net zero</p>
+      <div style="background:var(--green-light);border:1px solid #b8d4a8;border-radius:4px;padding:1rem;font-size:.82rem;color:var(--green)">
+        <strong>提示：</strong>请将此文件部署到 Netlify 或 GitHub Pages（公开仓库）后访问，本地直接打开 HTML 文件时浏览器会拦截跨域请求，导致内容无法加载。
       </div>
     </div>
   </div>
-
 </main>
 
 <script>
-// ── State ──
-const state = { news: null, papers: null, newsFilter: 'all', papersFilter: 'all' };
-
-// ── Date ──
 const now = new Date();
-document.getElementById('dateDisplay').innerHTML =
-  now.toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric',weekday:'short'}) +
-  '<br>' + now.toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit'});
+document.getElementById('mdate').innerHTML =
+  now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'short'})+'<br>'+
+  now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
 
-// ── Panel switching ──
-function switchPanel(name, btn) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + name).classList.add('active');
+function switchPanel(name,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
   btn.classList.add('active');
 }
+function refreshAll(){ loadNews(); loadPapers(); }
+function L(id,msg,sub){ document.getElementById(id).innerHTML=`<div class="loading"><div class="spin"></div><div class="ltxt">${msg}</div><div class="lsub">${sub||''}</div></div>`; }
+function stripHtml(h){ return (h||'').replace(/<[^>]*>/g,'').replace(/&[a-z#0-9]+;/g,' ').replace(/\s+/g,' ').trim(); }
 
-// ── Refresh ──
-function refreshAll() {
-  state.news = null; state.papers = null;
-  loadNews(); loadPapers();
+// ── News (RSS via rss2json free tier) ──
+const SOURCES = [
+  {name:'Reuters',      url:'https://feeds.reuters.com/reuters/environment',             cat:'综合'},
+  {name:'The Economist',url:'https://www.economist.com/climate-change/rss.xml',          cat:'政策'},
+  {name:'CNBC',         url:'https://www.cnbc.com/id/100727362/device/rss/rss.html',     cat:'能源'},
+  {name:'NYT Climate',  url:'https://rss.nytimes.com/services/xml/rss/nyt/Climate.xml',  cat:'气候'},
+  {name:'Guardian',     url:'https://www.theguardian.com/environment/rss',               cat:'环境'},
+  {name:'Carbon Brief', url:'https://www.carbonbrief.org/feed/',                         cat:'碳'},
+];
+const NKWS = ['climate','carbon','emission','renewable','clean energy','green','net zero','decarboniz','solar','wind','hydrogen','ev ','electric vehicle','environment','energy transition','carbon tax','fossil','biodiversity','sustainability','pollution'];
+function nRelevant(t){ const s=(t||'').toLowerCase(); return NKWS.some(k=>s.includes(k)); }
+
+let allNews=[], newsFilter='all';
+
+async function fetchRSS(src){
+  const r = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(src.url)}&count=12`);
+  if(!r.ok) throw new Error(r.status);
+  const d = await r.json();
+  if(d.status!=='ok') throw new Error(d.message||'rss error');
+  return (d.items||[]).filter(i=>nRelevant(i.title+' '+i.description)).slice(0,5).map(i=>({
+    source:src.name, cat:src.cat,
+    title:i.title||'',
+    summary:stripHtml(i.description||i.content||'').slice(0,200),
+    url:i.link||'#',
+    date:i.pubDate?new Date(i.pubDate).toLocaleDateString('zh-CN'):'',
+  }));
 }
 
-// ── Loading helper ──
-function showLoading(el, msg, sub) {
-  el.innerHTML = `<div class="loading-state">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">${msg}</div>
-    <div class="loading-sub">${sub || ''}</div>
-  </div>`;
-}
-
-// ── Error helper ──
-function showError(el, msg, detail) {
-  el.innerHTML = `<div class="error-state">
-    <p>${msg}</p>
-    <small>${detail || ''}</small>
-  </div>`;
-}
-
-// ── Call Claude API ──
-async function callClaude(prompt, systemPrompt) {
-  const resp = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: prompt }]
-    })
-  });
-  if (!resp.ok) throw new Error('API error ' + resp.status);
-  const data = await resp.json();
-  const text = data.content.map(b => b.text || '').join('');
-  return JSON.parse(text.replace(/```json|```/g, '').trim());
-}
-
-// ══════════════════════════════════════════
-// NEWS
-// ══════════════════════════════════════════
-const NEWS_SYSTEM = `你是一个专业的绿色政策资讯编辑。用户会请求你生成今日绿色政策相关新闻摘要。
-你必须只返回合法的JSON，不要任何额外文字或markdown代码块。
-JSON格式如下：
-{
-  "items": [
-    {
-      "source": "来源名称",
-      "title": "新闻标题（英文或中文）",
-      "summary": "2-3句摘要，中文",
-      "category": "政策|能源|技术|碳市场|气候",
-      "date": "今日日期",
-      "url": "https://...",
-      "importance": "high|medium"
-    }
-  ]
-}
-生成12-15条真实、最新、与环境政策/清洁能源/碳减排/绿色技术相关的新闻。来源涵盖NYT、WSJ、The Economist、CNBC、Reuters。标题和摘要要准确反映真实发生的事件，不要编造具体事实，可以用典型的近期新闻类型作为示例。`;
-
-async function loadNews() {
-  const el = document.getElementById('news-content');
-  const statsEl = document.getElementById('news-stats');
-  const filtersEl = document.getElementById('news-filters');
-  showLoading(el, '正在获取最新资讯', '连接新闻来源中…');
-  statsEl.style.display = 'none';
-  filtersEl.style.display = 'none';
-
-  const btn = document.getElementById('refreshBtn');
-  btn.disabled = true;
-
-  try {
-    const today = now.toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric'});
-    const data = await callClaude(
-      `请生成${today}绿色政策、清洁能源、碳减排、环境监管相关的新闻摘要列表，涵盖NYT、WSJ、The Economist、CNBC等来源。`,
-      NEWS_SYSTEM
-    );
-    state.news = data.items || [];
-    renderNews();
-  } catch(e) {
-    showError(el, '加载失败，请稍后重试', e.message);
-  } finally {
-    btn.disabled = false;
+async function loadNews(){
+  L('nc','抓取 RSS 资讯中','连接新闻来源…');
+  document.getElementById('ns').style.display='none';
+  document.getElementById('nf').style.display='none';
+  const res = await Promise.allSettled(SOURCES.map(fetchRSS));
+  allNews = res.flatMap(r=>r.status==='fulfilled'?r.value:[]);
+  const ok = res.filter(r=>r.status==='fulfilled').length;
+  if(!allNews.length){
+    document.getElementById('nc').innerHTML=`<div class="err">暂未获取到内容（${ok}/${SOURCES.length} 个来源可用）。<br><br>最常见原因：浏览器跨域限制（本地打开 HTML 文件时会发生）。请将文件部署到 Netlify 或 GitHub Pages 后再访问。<br><br>如果已部署仍出错，可能是 rss2json 免费额度暂时达到上限，稍后刷新即可。</div>`;
+    return;
   }
-}
-
-function renderNews() {
-  const el = document.getElementById('news-content');
-  const statsEl = document.getElementById('news-stats');
-  const filtersEl = document.getElementById('news-filters');
-  const items = state.news || [];
-  const filtered = state.newsFilter === 'all' ? items : items.filter(i => i.category === state.newsFilter);
-
-  if (!items.length) { el.innerHTML = '<div class="empty-state">暂无相关新闻</div>'; return; }
-
-  // Stats
-  const cats = [...new Set(items.map(i => i.category))];
-  statsEl.style.display = 'flex';
-  statsEl.innerHTML = `
-    <div class="stat-item"><div class="stat-num">${items.length}</div><div class="stat-label">条资讯</div></div>
-    <div class="stat-item"><div class="stat-num">${items.filter(i=>i.importance==='high').length}</div><div class="stat-label">重要动态</div></div>
-    <div class="stat-item"><div class="stat-num">${cats.length}</div><div class="stat-label">议题领域</div></div>
-  `;
-
-  // Filters
-  filtersEl.style.display = 'flex';
-  filtersEl.innerHTML = `<span class="filter-label">筛选</span>
-    <button class="filter-chip ${state.newsFilter==='all'?'active':''}" onclick="filterNews('all')">全部</button>
-    ${cats.map(c => `<button class="filter-chip ${state.newsFilter===c?'active':''}" onclick="filterNews('${c}')">${c}</button>`).join('')}`;
-
-  // Grid
-  el.innerHTML = `<div class="news-grid">
-    ${filtered.map(item => `
-      <a class="news-card" href="${item.url || '#'}" target="_blank" rel="noopener">
-        <div class="news-source">${item.source}${item.importance==='high' ? ' · <span style="color:var(--accent)">重要</span>' : ''}</div>
-        <div class="news-title">${item.title}</div>
-        <div class="news-summary">${item.summary}</div>
-        <div class="news-meta">${item.category} · ${item.date}</div>
-      </a>
-    `).join('')}
-  </div>`;
-}
-
-function filterNews(cat) {
-  state.newsFilter = cat;
   renderNews();
 }
 
-// ══════════════════════════════════════════
-// PAPERS
-// ══════════════════════════════════════════
-const PAPERS_SYSTEM = `你是一个专业的经济学文献助手。用户会请求你生成顶刊最新相关论文摘要。
-你必须只返回合法的JSON，不要任何额外文字或markdown代码块。
-JSON格式如下：
-{
-  "items": [
-    {
-      "journal": "期刊全名",
-      "journal_short": "缩写如AER",
-      "title": "论文标题（英文）",
-      "authors": "作者列表",
-      "abstract_zh": "150字以内的中文摘要，说明研究问题、方法和主要发现",
-      "doi": "10.xxxx/xxxxx",
-      "url": "https://doi.org/...",
-      "date": "发表年月",
-      "topic_tag": "碳税|可再生能源|环境监管|气候政策|能源转型|碳市场|绿色技术"
-    }
-  ]
+function renderNews(){
+  const cats=[...new Set(allNews.map(i=>i.cat))];
+  const filtered=newsFilter==='all'?allNews:allNews.filter(i=>i.cat===newsFilter);
+  const ns=document.getElementById('ns');
+  ns.style.display='flex';
+  ns.innerHTML=`<div class="stat-item"><div class="sn">${allNews.length}</div><div class="sl">条资讯</div></div><div class="stat-item"><div class="sn">${SOURCES.length}</div><div class="sl">个来源</div></div><div class="stat-item"><div class="sn">${cats.length}</div><div class="sl">分类</div></div>`;
+  const nf=document.getElementById('nf');
+  nf.style.display='flex';
+  nf.innerHTML=`<span class="flabel">筛选</span><button class="chip ${newsFilter==='all'?'on':''}" onclick="setNF('all')">全部</button>${cats.map(c=>`<button class="chip ${newsFilter===c?'on':''}" onclick="setNF('${c}')">${c}</button>`).join('')}`;
+  document.getElementById('nc').innerHTML=filtered.length
+    ?`<div class="ngrid">${filtered.map(i=>`<a class="ncard" href="${i.url}" target="_blank" rel="noopener"><div class="nsrc">${i.source}</div><div class="ntitle">${i.title}</div><div class="nsum">${i.summary}</div><div class="nmeta">${i.cat} · ${i.date}</div></a>`).join('')}</div>`
+    :'<div class="empty">该分类暂无内容</div>';
 }
-收录期刊：American Economic Review (AER), Quarterly Journal of Economics (QJE), Journal of Political Economy (JPE), Review of Economic Studies (REStud), Econometrica, Journal of Finance (JF), Journal of Environmental Economics and Management (JEEM), Management Science (MS), 经济学季刊 (CJE)。
-生成10-12篇与环境政策、清洁能源、碳减排、绿色技术经济学相关的论文。论文应为真实存在或高度代表性的研究类型，不要完全编造具体数据。`;
+function setNF(c){ newsFilter=c; renderNews(); }
 
-async function loadPapers() {
-  const el = document.getElementById('papers-content');
-  const statsEl = document.getElementById('papers-stats');
-  const filtersEl = document.getElementById('papers-filters');
-  showLoading(el, '检索顶刊文献', '查询 CrossRef 数据库中…');
-  statsEl.style.display = 'none';
-  filtersEl.style.display = 'none';
+// ── Papers (CrossRef free API) ──
+const JOURNALS=[
+  {name:'American Economic Review',                        short:'AER',    issn:'0002-8282'},
+  {name:'Quarterly Journal of Economics',                  short:'QJE',    issn:'0033-5533'},
+  {name:'Journal of Political Economy',                    short:'JPE',    issn:'0022-3808'},
+  {name:'Review of Economic Studies',                      short:'REStud', issn:'0034-6527'},
+  {name:'Econometrica',                                    short:'ECTA',   issn:'0012-9682'},
+  {name:'Journal of Finance',                              short:'JF',     issn:'0022-1082'},
+  {name:'Journal of Environmental Economics and Management',short:'JEEM',  issn:'0095-0696'},
+  {name:'Management Science',                              short:'MS',     issn:'0025-1909'},
+  {name:'China Journal of Economics',                      short:'经济学季刊',issn:'1672-9544'},
+];
+const LKWS=['climate','carbon','emission','renewable energy','clean energy','green technology','environmental policy','energy transition','carbon tax','decarbonization','carbon market','sustainability','pollution','fossil fuel'];
 
-  try {
-    const data = await callClaude(
-      '请生成近期在AER、QJE、JPE、REStud、Econometrica、Journal of Finance、JEEM、Management Science、经济学季刊中发表的、与绿色政策/能源经济/碳减排相关的代表性论文列表。',
-      PAPERS_SYSTEM
-    );
-    state.papers = data.items || [];
-    renderPapers();
-  } catch(e) {
-    showError(el, '加载失败，请稍后重试', e.message);
+function weeksAgo(n){ const d=new Date(); d.setDate(d.getDate()-n*7); return d.toISOString().split('T')[0]; }
+function fmtAuthors(a){ if(!a||!a.length) return ''; const n=a.slice(0,3).map(x=>[x.given,x.family].filter(Boolean).join(' ')); return n.join(', ')+(a.length>3?', et al.':''); }
+function cleanAbs(t){ return (t||'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim().slice(0,400); }
+function topic(t,ab){
+  const s=(t+' '+(ab||'')).toLowerCase();
+  if(s.includes('carbon tax')||s.includes('carbon price')||s.includes('carbon market')) return '碳市场';
+  if(s.includes('renewable')||s.includes('solar')||s.includes('wind')||s.includes('clean energy')) return '可再生能源';
+  if(s.includes('climate')||s.includes('global warming')) return '气候政策';
+  if(s.includes('emission')||s.includes('decarboniz')||s.includes('net zero')) return '碳减排';
+  if(s.includes('energy transition')||s.includes('fossil')||s.includes('hydrogen')) return '能源转型';
+  if(s.includes('green')||s.includes('technology')||s.includes('innovation')) return '绿色技术';
+  return '环境监管';
+}
+
+let allPapers=[], papersFilter='all';
+
+async function fetchJournal(j){
+  const q=LKWS.slice(0,4).join(' ');
+  const url=`https://api.crossref.org/works?filter=issn:${j.issn},from-pub-date:${weeksAgo(20)}&query=${encodeURIComponent(q)}&sort=published&order=desc&rows=8&select=DOI,title,author,abstract,published,URL&mailto=greendigest@example.com`;
+  const r=await fetch(url);
+  if(!r.ok) throw new Error(r.status);
+  const d=await r.json();
+  return (d.message?.items||[])
+    .filter(i=>{ const t=(i.title?.[0]||'')+' '+(i.abstract||''); return LKWS.some(k=>t.toLowerCase().includes(k)); })
+    .slice(0,3)
+    .map(i=>{
+      const title=i.title?.[0]||'';
+      const ab=cleanAbs(i.abstract);
+      const parts=i.published?.['date-parts']?.[0]||[];
+      return { journal:j.name, short:j.short, title, authors:fmtAuthors(i.author), abstract:ab, doi:i.DOI, url:i.URL||`https://doi.org/${i.DOI}`, date:parts.slice(0,2).join('-'), topic:topic(title,ab) };
+    });
+}
+
+async function loadPapers(){
+  L('pc','检索顶刊文献','查询 CrossRef 数据库…');
+  document.getElementById('ps').style.display='none';
+  document.getElementById('pf').style.display='none';
+  const res=await Promise.allSettled(JOURNALS.map(fetchJournal));
+  allPapers=res.flatMap(r=>r.status==='fulfilled'?r.value:[]);
+  if(!allPapers.length){
+    document.getElementById('pc').innerHTML=`<div class="err">CrossRef 查询失败，请刷新重试。CrossRef 为免费公开 API，偶有限速，稍等片刻即可。</div>`;
+    return;
   }
-}
-
-function renderPapers() {
-  const el = document.getElementById('papers-content');
-  const statsEl = document.getElementById('papers-stats');
-  const filtersEl = document.getElementById('papers-filters');
-  const items = state.papers || [];
-  const filtered = state.papersFilter === 'all' ? items : items.filter(i => i.topic_tag === state.papersFilter);
-
-  if (!items.length) { el.innerHTML = '<div class="empty-state">暂无相关文献</div>'; return; }
-
-  // Stats
-  const journals = [...new Set(items.map(i => i.journal_short))];
-  const topics = [...new Set(items.map(i => i.topic_tag))];
-  statsEl.style.display = 'flex';
-  statsEl.innerHTML = `
-    <div class="stat-item"><div class="stat-num">${items.length}</div><div class="stat-label">篇文献</div></div>
-    <div class="stat-item"><div class="stat-num">${journals.length}</div><div class="stat-label">本期刊</div></div>
-    <div class="stat-item"><div class="stat-num">${topics.length}</div><div class="stat-label">研究主题</div></div>
-  `;
-
-  // Filters
-  filtersEl.style.display = 'flex';
-  filtersEl.innerHTML = `<span class="filter-label">主题</span>
-    <button class="filter-chip ${state.papersFilter==='all'?'active':''}" onclick="filterPapers('all')">全部</button>
-    ${topics.map(t => `<button class="filter-chip ${state.papersFilter===t?'active':''}" onclick="filterPapers('${t}')">${t}</button>`).join('')}`;
-
-  // List
-  el.innerHTML = `<div class="papers-list">
-    ${filtered.map(item => `
-      <div class="paper-item">
-        <div class="paper-left">
-          <div class="paper-journal">${item.journal}</div>
-          <div class="paper-date">${item.date}</div>
-          <span class="paper-tag">${item.topic_tag}</span>
-        </div>
-        <div class="paper-right">
-          <div class="paper-title"><a href="${item.url||'#'}" target="_blank" rel="noopener">${item.title}</a></div>
-          <div class="paper-authors">${item.authors}</div>
-          <div class="paper-abstract">${item.abstract_zh}</div>
-          <div class="paper-doi">DOI: <a href="${item.url||'#'}" target="_blank">${item.doi||item.url||'—'}</a></div>
-        </div>
-      </div>
-    `).join('')}
-  </div>`;
-}
-
-function filterPapers(topic) {
-  state.papersFilter = topic;
   renderPapers();
 }
 
-// ── Init ──
+function renderPapers(){
+  const topics=[...new Set(allPapers.map(p=>p.topic))];
+  const journals=[...new Set(allPapers.map(p=>p.short))];
+  const filtered=papersFilter==='all'?allPapers:allPapers.filter(p=>p.topic===papersFilter);
+  const ps=document.getElementById('ps');
+  ps.style.display='flex';
+  ps.innerHTML=`<div class="stat-item"><div class="sn">${allPapers.length}</div><div class="sl">篇文献</div></div><div class="stat-item"><div class="sn">${journals.length}</div><div class="sl">本期刊</div></div><div class="stat-item"><div class="sn">${topics.length}</div><div class="sl">研究主题</div></div>`;
+  const pf=document.getElementById('pf');
+  pf.style.display='flex';
+  pf.innerHTML=`<span class="flabel">主题</span><button class="chip ${papersFilter==='all'?'on':''}" onclick="setPF('all')">全部</button>${topics.map(t=>`<button class="chip ${papersFilter===t?'on':''}" onclick="setPF('${t}')">${t}</button>`).join('')}`;
+  document.getElementById('pc').innerHTML=filtered.length
+    ?`<div class="plist">${filtered.map(p=>`<div class="pitem"><div class="pleft"><div class="pjournal">${p.journal}</div><div class="pdate">${p.date}</div><span class="ptag">${p.topic}</span></div><div><div class="ptitle"><a href="${p.url}" target="_blank" rel="noopener">${p.title}</a></div>${p.authors?`<div class="pauth">${p.authors}</div>`:''} ${p.abstract?`<div class="pabs">${p.abstract}${p.abstract.length>=400?'…':''}</div>`:''}<div class="pdoi">DOI: <a href="${p.url}" target="_blank">${p.doi}</a></div></div></div>`).join('')}</div>`
+    :'<div class="empty">该主题暂无文献</div>';
+}
+function setPF(t){ papersFilter=t; renderPapers(); }
+
 loadNews();
 loadPapers();
 </script>
